@@ -1,18 +1,27 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { GiStarGate } from "react-icons/gi"; 
+import { useInView } from 'react-intersection-observer';
 
 const ButtonGroup = () => {
   const controls = useAnimation();
   const buttonRef = useRef(null);
   const [buttonWidth, setButtonWidth] = useState(0); 
+  const { ref, inView } = useInView({
+    threshold: 0.3, // Trigger animation when 30% of the component is visible
+    triggerOnce: false, // Ensures animation triggers every time the element is in view
+  });
 
   useEffect(() => {
-    const buttonWidth = buttonRef.current.offsetWidth; 
-    setButtonWidth(buttonWidth); 
+    const buttonWidth = buttonRef.current.offsetWidth;
+    setButtonWidth(buttonWidth);
 
-    controls.start('animate');
-  }, [controls]);
+    if (inView) {
+      controls.start('animate');
+    } else {
+      controls.start('initial');
+    }
+  }, [controls, inView]);
 
   const variants = {
     initial: { x: buttonWidth / 2 }, 

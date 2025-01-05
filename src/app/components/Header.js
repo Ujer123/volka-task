@@ -1,31 +1,41 @@
 'use client'
-import { motion, useViewportScroll, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Gcore from '@/../public/gcore-logo.png'
 import { FaChevronDown } from "react-icons/fa";
-import GOrange from '@/../public/gcore-orange.png';
 import ButtonGroup from "./ButtonGroup";
 import { useInView } from "react-intersection-observer";
+import AiChip from "./AiChip";
 
 export default function Home() {
     const [showPage, setShowPage] = useState(false);
-    const { scrollYProgress } = useViewportScroll();
     const { ref, inView } = useInView({
       threshold: 0.3, // Trigger animation when 30% of the component is visible
       triggerOnce: false, // Ensures animation triggers every time the element is in view
     });
-    const containerVariants = {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.1, // Stagger children by 0.1 seconds
-        },
-      },
-    };
  // Controls for the animation
  const controls = useAnimation();
+ 
+
+ useEffect(() => {
+  if (inView) {
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.2,
+        delay: 0.3,
+        ease: [0.6, -0.05, 0.01, 0.95],
+      },
+    });
+  } else {
+    controls.start({
+      opacity: 0,
+      y: -50,
+    });
+  }
+}, [inView, controls]);
 
  // Trigger animation when in view
  useEffect(() => {
@@ -33,34 +43,6 @@ export default function Home() {
      controls.start("visible");
    }
  }, [inView, controls]);
-
-    // Animation variants for sliding in from the right
-  const logoVariants = {
-    hidden: { opacity: 0, x: 100 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring",
-        stiffness: 50,
-        damping: 15,
-        staggerChildren: 0.2, // Stagger child animations
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: 100 },
-    visible: { opacity: 1, x: 0, transition: { type: "tween", duration: 1.5 } },
-  };
-  
-    const childVariants = {
-      hidden: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0 },
-      ease: [0.6, -0.05, 0.01, 0.95],
-      transition: { duration: 2.5, delay: 0.2 },
-    };
-  
 
     useEffect(() => {
         // Show the page content after 3 seconds (adjust this based on your video duration)
@@ -113,7 +95,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               animate={inView ?{ opacity: 0, x: -50 }: {opacity: 1, x: 0}}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex space-x-6 ms-28"
+              className="flex nav-edit space-x-6 ms-28"
             >
               <a href="#" className="hover:underline flex">Products <FaChevronDown className="mt-1 ms-2"/></a>
               <a href="#" className="hover:underline flex">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
@@ -143,13 +125,17 @@ export default function Home() {
         {/* Main Section */}
         <main className="flex flex-col items-center text-center space-y-6 mt-16 z-10 relative">
         <motion.p
-              initial={{ opacity: 0, x: -100 }}
-              animate={inView? {opacity: 0, y:50}:{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-              className="px-4 py-1 bg-black text-white rounded-full"
-            >
-              Beta Release
-            </motion.p>
+  initial={{ opacity: 0, x: -100 }}
+  animate={inView ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
+  transition={{ duration: 0.5, delay: 0.7 }}
+  className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg "
+  style={{
+    background: 'linear-gradient(to bottom, #222, #111)', // Adjust colors as needed
+  }}
+>
+  <span className="text-orange-500 text-lg">✨</span>
+  <span>Beta release</span>
+</motion.p>
             <motion.h1
                 className="lg:text-8xl text-5xl bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent"
               >
@@ -191,49 +177,23 @@ export default function Home() {
             </motion.div>
         </main>
   
-        {/* Circuit Animations */}
-        <div className="relative mt-16 flex justify-center">
-          {/* Circuit Lines */}
-          <div className="absolute top-1/2 left-0 h-1 w-1/2 bg-gradient-to-r from-orange-custom to-transparent"></div>
-          <div className="absolute top-1/2 right-0 h-1 w-1/2 bg-gradient-to-l from-orange-custom to-transparent"></div>
-  
-          {/* AI Chip */}
-          <div className="chip">AI</div>
-    <svg className="lines" width="500" height="200" xmlns="http://www.w3.org/2000/svg">
-      <path
-        className="line"
-        d="M250,250 L400,150" 
-        stroke="orange" 
-        strokeWidth="2" 
-        fill="none"
-      />
-      <path
-        className="line"
-        d="M250,250 L150,350" 
-        stroke="orange" 
-        strokeWidth="2" 
-        fill="none"
-        />
-    </svg>
-        </div>
+        <AiChip/>
       </div>
       </motion.section>
-      <section className="min-h-screen about-sec overflow-x-hidden" >    
+      <section className="min-h-screen about-sec overflow-x-hidden">    
         <header className="justify-self-center">
         <motion.nav
         initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={controls}
         transition={{
           duration: 0.2,
           delay: 0.3,
           ease: [0.6, -0.05, 0.01, 0.95], // Custom easing for smoother animation
         }}
-        style={{
-          opacity: scrollYProgress, // Fade in as the user scrolls
-        }}
-        className="flex space-x-8 bg-black rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
+        
+        className="flex space-x-8 nav-edit bg-black rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
       >
-                <Image src={GOrange} width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
+                <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
               <a href="#" className="hover:underline flex text-sm self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
               <a href="#" className="hover:underline flex text-sm self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
               <a href="#" className="hover:underline flex text-sm self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
@@ -245,23 +205,30 @@ export default function Home() {
               <main>
                 <ButtonGroup/>
                 <div className="container">
-                <div ref={ref}>
-      <motion.h2
-        variants={containerVariants}
-        initial="hidden"
-        animate={inView ? "visible" : "hidden"} // Trigger animation based on visibility
-        className="text-5xl text-center mt-2"
+                <div ref={ref} className="flex justify-center">
+  <motion.h2
+    initial={{ opacity: 0 }}
+    animate={inView?{ opacity: 1 }: {opacity: 0}}
+    transition={{ duration: 1, delay: 0.2 }}
+    className="text-5xl text-center mt-2 space-x-4 max-w-3xl"
+  >
+    {["Use", "AI", "faster", "and", "more", "efficiently", "right", "on", "your", "device!"].map((word, index) => (
+      <motion.span
+        key={index}
+        initial={{ opacity: 0 }}
+        animate={inView?{ opacity: 1 }: {opacity: 0}}
+        transition={{ duration: 0.5, delay: 0.2 + index * 0.3 }}
+        className="inline-block mr-1"
       >
-        <motion.span variants={childVariants}>Use AI </motion.span>
-        <motion.span variants={childVariants}>faster and more <br /> </motion.span>
-        <motion.span variants={childVariants}>efficiently </motion.span>
-        <motion.span variants={childVariants}>right on your device!</motion.span>
-      </motion.h2>
-    </div>
+        {word} {index === 3 && <br />}
+      </motion.span>
+    ))}
+  </motion.h2>
+</div>
                         <div className="grid mt-5 grid-cols-3">
                         <motion.div
     initial={{ opacity: 0, y: 100 }}
-    animate={{ opacity: 1, y: 0 }}
+    animate={inView?{opacity:1, y:0}:{ opacity: 0, y: 100 }}
     transition={{ duration: 1.5, delay: 0.2 }}
     className="flex justify-center relative"
   >
@@ -273,7 +240,24 @@ export default function Home() {
     >
       <source src='/star.mp4' type="video/mp4" />
     </video>
-    <h5 className="text-white absolute bottom-3 text-lg font-bold start-auto">The Gcore Inference At the Edge:<br/>Speed Up Ai, Reduce Latency</h5>
+    <motion.h5
+  initial={{ opacity: 0 }}
+  animate={inView?{ opacity: 1 }: {opacity: 0}}
+  transition={{ duration: 1, delay: 1.7 }}
+  className="text-white absolute bottom-3 text-lg font-bold w-72 start-auto"
+>
+  {["The", "Gcore", "Inference", "At", "the", "Edge:", "Speed", "Up", "Ai,", "Reduce", "Latency"].map((word, index) => (
+    <motion.span
+      key={index}
+      initial={{ opacity: 0 }}
+      animate={inView?{ opacity: 1 }: {opacity:0}}
+      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      className="inline-block mr-1"
+    >
+      {word}
+    </motion.span>
+  ))}
+</motion.h5>
   </motion.div>
 
   <motion.div
@@ -292,66 +276,110 @@ export default function Home() {
 
     <div className=" absolute bottom-0 right-0 w-2/3 rounded-lg ps-10 pt-10" style={{backgroundColor: '#f7f7f7'}}>
     <motion.div   
-     ref={ref} 
-    variants={logoVariants}
-        initial="hidden"
-        animate={controls} 
-         className="flex justify-end space-x-2">
-        <div className="bg-white w-auto flex rounded-full" variants={itemVariants}>
-          <div className="me-1 mt-1 border rounded-full p-2">
-            <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
-          </div>
-            <p className="font-bold self-center me-2">Text generation</p>
-        </div>
-        <div className="bg-white w-auto flex rounded-full" variants={itemVariants}>
-          <div className="me-1 mt-1 border rounded-full p-2">
-            {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
-            <h3 className="font-bold h-3 text-xl w-5 text-purple-800 ">S<span className="text-red-500">.</span></h3>
-          </div>
-            <p className="font-bold self-center me-2">Image generation</p>
-        </div>
-    </motion.div>
-    <div className="flex justify-end mt-2 space-x-2">
-        <div className="bg-white w-auto flex rounded-full">
+  ref={ref} 
+  initial={{ opacity: 0, x: 100 }}
+  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+  transition={{ duration: 1.5, delay: 0.2 }}
+  className="flex justify-end space-x-2"
+>
+  <motion.div
+    className="bg-white w-auto flex rounded-full"
+    initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
+    transition={{ duration: 1.5, delay: 0.4 }}
+  >
+    <div className="me-1 mt-1 border rounded-full p-2">
+      <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
+    </div>
+    <p className="font-bold self-center me-2">Text generation</p>
+  </motion.div>
+  <motion.div
+    className="bg-white w-auto flex rounded-full"
+    initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+    transition={{ duration: 1.5, delay: 0.6 }}
+  >
+    <div className="me-1 mt-1 border rounded-full p-2">
+      {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
+      <h3 className="font-bold h-3 text-xl w-5 text-purple-800 ">S<span className="text-red-500">.</span></h3>
+    </div>
+    <p className="font-bold self-center me-2">Image generation</p>
+  </motion.div>
+</motion.div>
+    <motion.div 
+    className="flex justify-end mt-2 space-x-2" 
+    ref={ref} 
+  initial={{ opacity: 0, x: 100 }}
+  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+  transition={{ duration: 1.5, delay: 0.4 }}>
+        <motion.div 
+        className="bg-white w-auto flex rounded-full"
+        initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
+    transition={{ duration: 1.5, delay: 0.6 }}
+        >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Speech recognition</p>
-        </div>
-        <div className="bg-white w-auto flex rounded-full">
+        </motion.div>
+        <motion.div 
+        className="bg-white w-auto flex rounded-full"
+        initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
+    transition={{ duration: 1.5, delay: 0.8 }}
+        >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/m-logo.png' alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Text generation</p>
-        </div>
-        <div className="bg-white w-auto flex rounded-s-full">
+        </motion.div>
+        <motion.div 
+        className="bg-white w-auto flex rounded-s-full"
+        initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+    transition={{ duration: 1.5, delay: 1 }}
+        >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Speec</p>
-        </div>
-    </div>
-    <div className="flex justify-end mt-2 mb-4 space-x-2">
-        <div className="bg-white w-auto flex rounded-full">
+        </motion.div>
+    </motion.div>
+    <motion.div
+    className="flex justify-end mt-2 mb-4 space-x-2"
+    initial={{ opacity: 0, x: 100 }}
+  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+  transition={{ duration: 1.5, delay: 0.4 }}>
+        <motion.div className="bg-white w-auto flex rounded-full"
+        initial={{ opacity: 0, x: 100 }}
+    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+    transition={{ duration: 1.5, delay: 1 }}>
           <div className="me-1 mt-1 border rounded-full p-2">
             {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
             <h3 className="font-bold h-3 text-xl w-5 text-purple-800">S<span className="text-red-500">.</span></h3>
           </div>
             <p className="font-bold self-center me-2">Image generation</p>
-        </div>
-        <div className="bg-white w-auto flex rounded-full">
+        </motion.div>
+        <motion.div className="bg-white w-auto flex rounded-full"
+        initial={{ opacity: 0, x: 100 }}
+        animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+        transition={{ duration: 1.5, delay: 1.2 }}>
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Image classification</p>
-        </div>
-        <div className="bg-white w-auto flex rounded-s-full">
+        </motion.div>
+        <motion.div className="bg-white w-auto flex rounded-s-full"
+        initial={{ opacity: 0, x: 100 }}
+        animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
+        transition={{ duration: 1.5, delay: 1.4 }}>
           <div className="me-1 mt-1 border rounded-full p-2">
           <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Speech recogni</p>
-        </div>
-    </div>
+        </motion.div>
+    </motion.div>
     </div>
 
   </motion.div>
@@ -359,7 +387,262 @@ export default function Home() {
                 </div>
               </main>
     </section>
+    <section className="min-h-screen bg-black overflow-x-hidden">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial={{ opacity: 0, y: -50 }}
+          animate={inView ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.2,
+            delay: 0.3,
+            ease: [0.6, -0.05, 0.01, 0.95],
+          }}
+          className="flex nav-edit space-x-8 bg-black border rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex text-sm self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
 
+      {/* Subheading */}
+      <div className="flex justify-center mt-6">
+        <motion.p
+          initial={{ opacity: 0, x: -100 }}
+          animate={inView ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg w-36"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+        >
+          <span className="text-orange-500 text-lg">✨</span>
+          <span>AI potential</span>
+        </motion.p>
+      </div>
+
+      {/* Title */}
+      <div className="flex justify-center ">
+        <motion.h2
+          initial={{ opacity: 1 }}
+          animate={inView?{ opacity: 0 }: {opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="text-5xl text-center text-white mt-2 space-x-4 max-w-xl"
+        >
+          {["Unleash", "your", "AI", "application's", "full", "potential"].map((word, index) => (
+            <motion.span
+            key={index}
+            initial={{ opacity: 1 }}
+            animate={inView?{ opacity: 0 }: {opacity:1}}
+            transition={{ duration: 1.7, delay: 1.5 + index * 0.3 }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+
+      {/* Videos with text */}
+      <div className="flex justify-between space-x-4 my-12 px-8">
+        {/* Left Video */}
+        <motion.div
+    initial={{ opacity: 0, y: 100 }}
+    animate={inView?{opacity:0, y:100}:{ opacity: 1, y: 0 }}
+    transition={{ duration: 1.5, delay: 0.2 }}
+    className="flex justify-center relative w-2/3"
+  >
+    <video
+      className="h-full w-full rounded-2xl  object-cover "
+      autoPlay
+      muted
+      loop
+    >
+      <source src='/earth.mp4' type="video/mp4" />
+    </video>
+    <motion.h5
+  initial={{ opacity: 1 }}
+  animate={inView?{ opacity: 0 }: {opacity: 1}}
+  transition={{ duration: 2, delay: 1.7 }}
+  className="text-white absolute top-3 text-lg font-bold w-72 start-10"
+>
+  {["Low", "-", "latency", "global", "network"].map((word, index) => (
+    <motion.span
+      key={index}
+      initial={{ opacity: 0 }}
+      animate={inView?{ opacity: 0 }: {opacity:1}}
+      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      className="inline-block mr-1"
+    >
+      {word}
+    </motion.span>
+  ))}
+</motion.h5>
+<motion.p 
+initial={{opacity: 1, y: 0}}
+animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
+transition={{ duration: 1, delay: 0.7 }}
+className="text-slate-700 w-full absolute top-12 text-md font-bold start-10">Maximize model response time with our <span className='text-white'>160+ location CDN.</span></motion.p>
+<motion.p 
+initial={{opacity: 1, y: 0}}
+animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
+transition={{ duration: 1.5, delay: 0.7 }}
+className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">providing an average global latency of 30ms</motion.p>
+  </motion.div>
+
+        {/* Right Video */}
+        <motion.div
+    initial={{ opacity: 0, y: 100 }}
+    animate={inView?{opacity:0, y:100}:{ opacity: 1, y: 0 }}
+    transition={{ duration: 1.5, delay: 0.2 }}
+    className="flex justify-center relative w-1/3"
+  >
+    <video
+      className="h-full w-full rounded-2xl  object-cover "
+      autoPlay
+      muted
+      loop
+    >
+      <source src='/ai-chip.mp4' type="video/mp4" />
+    </video>
+    <motion.h5
+  initial={{ opacity: 1 }}
+  animate={inView?{ opacity: 0 }: {opacity: 1}}
+  transition={{ duration: 2, delay: 1.7 }}
+  className="text-white absolute bottom-36 text-lg font-bold w-72 start-1"
+>
+  {["Single", "end", "-", "point", "for","all", "AI", "tasks"].map((word, index) => (
+    <motion.span
+      key={index}
+      initial={{ opacity: 0 }}
+      animate={inView?{ opacity: 0 }: {opacity:1}}
+      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      className="inline-block mr-1"
+    >
+      {word}
+    </motion.span>
+  ))}
+</motion.h5>
+<motion.p 
+initial={{opacity: 1, y: 0}}
+animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
+transition={{ duration: 1, delay: 0.7 }}
+className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gcore offers automated infrastructured management for AI applications while offering real-time inference</motion.p>
+
+  </motion.div>
+      </div>
+    </section>
+              
+    <section className="min-h-screen bg-black overflow-x-hidden">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial={{ opacity: 0, y: -50 }}
+          animate={inView? {opacity: 0, y: -50} :{opacity: 1, y: 0}}
+          transition={{
+            duration: 1.2,
+            delay: 0.3,
+            ease: [0.6, -0.05, 0.01, 0.95], // Custom easing for smoother animation
+          }}
+          
+          className="flex space-x-8 nav-edit bg-black border rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex text-sm self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex text-sm bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      <main className="grid mt-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <motion.div
+            className=" p-6 rounded-lg shadow-lg h-60 relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
+            transition={{ duration: 1.5, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <video
+        className="absolute w-52 right-0 h-52 bottom-0 object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+      >
+        <source src='/thunder.mp4' type="video/mp4" />
+      </video>
+            <div className="relative z-10">
+              <p className="text-white font-bold">Data privacy and security</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
+            
+            </div>
+          </motion.div>
+      <motion.div
+            className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
+            transition={{ duration: 1.7, delay: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <div className="relative z-10">
+              <p className="text-white font-bold">Data privacy and security</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
+              <p className="text-gray-400">Byee</p>
+            </div>
+          </motion.div>
+      <motion.div
+            className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
+            transition={{ duration: 1.9, delay: 0.9 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <div className="relative z-10">
+              <p className="text-white font-bold">Data privacy and security</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
+              <p className="text-gray-400">Byee</p>
+            </div>
+          </motion.div>
+      <motion.div
+            className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
+            transition={{ duration: 2.1, delay: 1.1 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <div className="relative z-10">
+              <p className="text-white font-bold">Data privacy and security</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
+              <p className="text-gray-400">Byee</p>
+            </div>
+          </motion.div>
+      <motion.div
+            className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            initial={{ opacity: 1, y: 0 }}
+            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
+            transition={{ duration: 2.3, delay: 1.3 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <div className="relative z-10">
+              <p className="text-white font-bold">Data privacy and security</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
+              <p className="text-gray-400">Byee</p>
+            </div>
+          </motion.div>            
+      </main>
+      </section>
       </>
       )}
       </>
