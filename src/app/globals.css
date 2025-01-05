@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for glow and grid */
+.bg-grid {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 48px,
+    rgba(255, 255, 255, 0.1) 49px
+  ),
+  repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 48px,
+    rgba(255, 255, 255, 0.1) 49px
+  );
+  z-index: -1;
+}
+
+/* .glow-effect {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 136, 0, 0.6), transparent 70%);
+  filter: blur(100px);
+  transform: rotate(45deg);
+  animation: glow 6s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+} */
+.chip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #222;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px orange;
+}
+
+.lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.about-sec{
+  background-image: url('/square.avif');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.line {
+  stroke-dasharray: 100; /* Length of dashes */
+  stroke-dashoffset: 100; /* Initial offset (hidden) */
+  animation: draw-line 2s linear infinite;
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0; /* Reveal the line */
+  }
+}
