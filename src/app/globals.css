@@ -79,3 +79,7 @@
     stroke-dashoffset: 0; /* Reveal the line */
   }
 }
+
+video{
+  filter: brightness(60%);
+}

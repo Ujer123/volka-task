@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export default function AiChip() {
   const wireVariants = {
     initial: { strokeDasharray: "10, 10", strokeDashoffset: 10 },
-    animate: { strokeDashoffset: 0, transition: { duration: 2, ease: "linear", repeat: Infinity, repeatType: "loop" } },
+    animate: { strokeDashoffset: 0, transition: { duration: 2, ease: "linear" } },
   };
   return (
     <div className="relative bg-black flex flex-col items-center justify-center text-white">      
@@ -52,8 +52,8 @@ export default function AiChip() {
       </div>
       <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
         <motion.line x1="50%" y1="50%" x2="30%" y2="20%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
-        <motion.line x1="50%" y1="50%" x2="20%" y2="50%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
-        <motion.line x1="50%" y1="50%" x2="30%" y2="80%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
+        <motion.line x1="50%" y1="50%" x2="5%" y2="50%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
+        <motion.line x1="50%" y1="50%" x2="3%" y2="80%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
         <motion.line x1="50%" y1="50%" x2="70%" y2="20%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
         <motion.line x1="50%" y1="50%" x2="80%" y2="50%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />
         <motion.line x1="50%" y1="50%" x2="70%" y2="80%" stroke="orange" strokeWidth="10" variants={wireVariants} initial="initial" animate="animate" />

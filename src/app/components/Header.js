@@ -7,15 +7,40 @@ import { FaChevronDown } from "react-icons/fa";
 import ButtonGroup from "./ButtonGroup";
 import { useInView } from "react-intersection-observer";
 import AiChip from "./AiChip";
+import useAnimateOnInView from "./UseAnimationOnInView";
+import useInViewComp from "./useInViewComp";
 
 export default function Home() {
     const [showPage, setShowPage] = useState(false);
+    const headerAnimation = useAnimateOnInView();
+    const sectionAnimation = useInViewComp()
+    const section2Animation = useInViewComp()
     const { ref, inView } = useInView({
       threshold: 0.3, // Trigger animation when 30% of the component is visible
       triggerOnce: false, // Ensures animation triggers every time the element is in view
     });
  // Controls for the animation
  const controls = useAnimation();
+ const [isFixed, setIsFixed] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.querySelector('.section-to-watch');
+      if (section) {
+        const { top, bottom } = section.getBoundingClientRect();
+        if (top <= 0 && bottom > 0) {
+          setIsFixed(true);
+        } else {
+          setIsFixed(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
  
 
  useEffect(() => {
@@ -61,6 +86,7 @@ export default function Home() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
   <video
     className="w-full h-full object-cover"
+    style={{filter: "brightness(100%)"}}
     autoPlay
     muted
     
@@ -181,7 +207,7 @@ export default function Home() {
       </div>
       </motion.section>
       <section className="min-h-screen about-sec overflow-x-hidden">    
-        <header className="justify-self-center">
+      <header className={`justify-self-center ${isFixed ? 'fixed top-0 left-1/2 transform -translate-x-1/2 w-full z-50' : ''}`}>
         <motion.nav
         initial={{ opacity: 0, y: -50 }}
         animate={controls}
@@ -387,16 +413,15 @@ export default function Home() {
                 </div>
               </main>
     </section>
-    <section className="min-h-screen bg-black overflow-x-hidden">
+    <section ref={section2Animation.ref} className="min-h-screen bg-black overflow-x-hidden">
       {/* Header */}
       <header className="justify-self-center">
         <motion.nav
-          initial={{ opacity: 0, y: -50 }}
-          animate={inView ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.2,
-            delay: 0.3,
-            ease: [0.6, -0.05, 0.01, 0.95],
+          initial="hidden"
+          animate={section2Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
           className="flex nav-edit space-x-8 bg-black border rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
         >
@@ -413,9 +438,12 @@ export default function Home() {
       {/* Subheading */}
       <div className="flex justify-center mt-6">
         <motion.p
-          initial={{ opacity: 0, x: -100 }}
-          animate={inView ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, x: -100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
           className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg w-36"
           style={{
             background: 'linear-gradient(to bottom, #222, #111)',
@@ -429,17 +457,23 @@ export default function Home() {
       {/* Title */}
       <div className="flex justify-center ">
         <motion.h2
-          initial={{ opacity: 1 }}
-          animate={inView?{ opacity: 0 }: {opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
+          initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
           className="text-5xl text-center text-white mt-2 space-x-4 max-w-xl"
         >
           {["Unleash", "your", "AI", "application's", "full", "potential"].map((word, index) => (
             <motion.span
-            key={index}
-            initial={{ opacity: 1 }}
-            animate={inView?{ opacity: 0 }: {opacity:1}}
-            transition={{ duration: 1.7, delay: 1.5 + index * 0.3 }}
+            key={index}            
+            initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
               className="inline-block mr-1"
             >
               {word} {index === 3 && <br />}
@@ -449,12 +483,15 @@ export default function Home() {
       </div>
 
       {/* Videos with text */}
-      <div className="flex justify-between space-x-4 my-12 px-8">
+      <div className="flex justify-between space-x-4 mt-12 pb-12 px-8">
         {/* Left Video */}
         <motion.div
-    initial={{ opacity: 0, y: 100 }}
-    animate={inView?{opacity:0, y:100}:{ opacity: 1, y: 0 }}
-    transition={{ duration: 1.5, delay: 0.2 }}
+    initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
     className="flex justify-center relative w-2/3"
   >
     <video
@@ -466,17 +503,23 @@ export default function Home() {
       <source src='/earth.mp4' type="video/mp4" />
     </video>
     <motion.h5
-  initial={{ opacity: 1 }}
-  animate={inView?{ opacity: 0 }: {opacity: 1}}
-  transition={{ duration: 2, delay: 1.7 }}
+  initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 2, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
   className="text-white absolute top-3 text-lg font-bold w-72 start-10"
 >
   {["Low", "-", "latency", "global", "network"].map((word, index) => (
     <motion.span
       key={index}
-      initial={{ opacity: 0 }}
-      animate={inView?{ opacity: 0 }: {opacity:1}}
-      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 1.8 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
       className="inline-block mr-1"
     >
       {word}
@@ -484,22 +527,31 @@ export default function Home() {
   ))}
 </motion.h5>
 <motion.p 
-initial={{opacity: 1, y: 0}}
-animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
-transition={{ duration: 1, delay: 0.7 }}
+initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
 className="text-slate-700 w-full absolute top-12 text-md font-bold start-10">Maximize model response time with our <span className='text-white'>160+ location CDN.</span></motion.p>
 <motion.p 
-initial={{opacity: 1, y: 0}}
-animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
-transition={{ duration: 1.5, delay: 0.7 }}
+initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
 className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">providing an average global latency of 30ms</motion.p>
   </motion.div>
 
         {/* Right Video */}
         <motion.div
-    initial={{ opacity: 0, y: 100 }}
-    animate={inView?{opacity:0, y:100}:{ opacity: 1, y: 0 }}
-    transition={{ duration: 1.5, delay: 0.2 }}
+    initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
     className="flex justify-center relative w-1/3"
   >
     <video
@@ -511,17 +563,23 @@ className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">pro
       <source src='/ai-chip.mp4' type="video/mp4" />
     </video>
     <motion.h5
-  initial={{ opacity: 1 }}
-  animate={inView?{ opacity: 0 }: {opacity: 1}}
-  transition={{ duration: 2, delay: 1.7 }}
+  initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 2, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
   className="text-white absolute bottom-36 text-lg font-bold w-72 start-1"
 >
   {["Single", "end", "-", "point", "for","all", "AI", "tasks"].map((word, index) => (
     <motion.span
       key={index}
-      initial={{ opacity: 0 }}
-      animate={inView?{ opacity: 0 }: {opacity:1}}
-      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      initial="hidden"
+          animate={section2Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.8 + index* 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
       className="inline-block mr-1"
     >
       {word}
@@ -538,18 +596,16 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
       </div>
     </section>
               
-    <section className="min-h-screen bg-black overflow-x-hidden">
+    <section ref={sectionAnimation.ref} className="min-h-screen bg-black overflow-x-hidden">
       {/* Header */}
       <header className="justify-self-center">
         <motion.nav
-          initial={{ opacity: 0, y: -50 }}
-          animate={inView? {opacity: 0, y: -50} :{opacity: 1, y: 0}}
-          transition={{
-            duration: 1.2,
-            delay: 0.3,
-            ease: [0.6, -0.05, 0.01, 0.95], // Custom easing for smoother animation
+          initial="hidden"
+          animate={sectionAnimation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-          
           className="flex space-x-8 nav-edit bg-black border rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
         >
           <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
@@ -565,10 +621,12 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
       <main className="grid mt-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
       <motion.div
             className=" p-6 rounded-lg shadow-lg h-60 relative overflow-hidden"
-            initial={{ opacity: 0, y: 50 }}
-            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
-            transition={{ duration: 1.5, delay: 0.5 }}
-            viewport={{ once: true }}
+            initial="hidden"
+          animate={sectionAnimation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
             <video
@@ -587,10 +645,12 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
           </motion.div>
       <motion.div
             className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
-            initial={{ opacity: 0, y: 50 }}
-            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
-            transition={{ duration: 1.7, delay: 0.7 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            animate={sectionAnimation.controls}  
+            variants={{
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1.4, delay: 1, ease: [0.4, -0.05, 0.01, 0.95] } },
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
             <div className="relative z-10">
@@ -601,10 +661,12 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
           </motion.div>
       <motion.div
             className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
-            initial={{ opacity: 0, y: 50 }}
-            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
-            transition={{ duration: 1.9, delay: 0.9 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            animate={sectionAnimation.controls}  
+            variants={{
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1.6, delay: 1.2, ease: [0.4, -0.05, 0.01, 0.95] } },
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
             <div className="relative z-10">
@@ -615,10 +677,12 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
           </motion.div>
       <motion.div
             className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
-            initial={{ opacity: 0, y: 50 }}
-            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
-            transition={{ duration: 2.1, delay: 1.1 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            animate={sectionAnimation.controls}  
+            variants={{
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1.8, delay: 1.4, ease: [0.4, -0.05, 0.01, 0.95] } },
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
             <div className="relative z-10">
@@ -629,10 +693,12 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
           </motion.div>
       <motion.div
             className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
-            initial={{ opacity: 1, y: 0 }}
-            animate={inView?{ opacity: 0, y: 50 }: {opacity: 1, y: 0}}
-            transition={{ duration: 2.3, delay: 1.3 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            animate={sectionAnimation.controls}  
+            variants={{
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 1.6, ease: [0.4, -0.05, 0.01, 0.95] } },
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
             <div className="relative z-10">
