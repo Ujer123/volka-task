@@ -7,12 +7,10 @@ import { FaChevronDown } from "react-icons/fa";
 import ButtonGroup from "./ButtonGroup";
 import { useInView } from "react-intersection-observer";
 import AiChip from "./AiChip";
-import useAnimateOnInView from "./UseAnimationOnInView";
 import useInViewComp from "./useInViewComp";
 
 export default function Home() {
     const [showPage, setShowPage] = useState(false);
-    const headerAnimation = useAnimateOnInView();
     const sectionAnimation = useInViewComp()
     const section2Animation = useInViewComp()
     const { ref, inView } = useInView({
@@ -108,7 +106,7 @@ export default function Home() {
         <motion.div
   className="text-xl font-bold flex"
 >
-  <Image src={Gcore} width={30} alt="logo" className="h-auto w-auto" height={30} />
+  <Image src='/gcore-logo.png' width={30} alt="logo" className="h-auto w-auto" height={30} />
   <motion.span
     initial={{ opacity: 0, x: 50 }}
     animate={inView ?{ opacity: 0, x: 50, } :{opacity: 1, x:0}}
