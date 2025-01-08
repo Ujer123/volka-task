@@ -2,10 +2,8 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import Gcore from '@/../public/gcore-logo.png'
+import { GiStarGate } from "react-icons/gi"; 
 import { FaChevronDown } from "react-icons/fa";
-import ButtonGroup from "./ButtonGroup";
-import { useInView } from "react-intersection-observer";
 import AiChip from "./AiChip";
 import useInViewComp from "./useInViewComp";
 
@@ -13,59 +11,11 @@ export default function Home() {
     const [showPage, setShowPage] = useState(false);
     const sectionAnimation = useInViewComp()
     const section2Animation = useInViewComp()
-    const { ref, inView } = useInView({
-      threshold: 0.3, // Trigger animation when 30% of the component is visible
-      triggerOnce: false, // Ensures animation triggers every time the element is in view
-    });
- // Controls for the animation
- const controls = useAnimation();
- const [isFixed, setIsFixed] = useState(false);
+    const section3Animation = useInViewComp()
+    const section4Animation = useInViewComp()
+    const section5Animation = useInViewComp()
+    const section6Animation = useInViewComp()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = document.querySelector('.section-to-watch');
-      if (section) {
-        const { top, bottom } = section.getBoundingClientRect();
-        if (top <= 0 && bottom > 0) {
-          setIsFixed(true);
-        } else {
-          setIsFixed(false);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
- 
-
- useEffect(() => {
-  if (inView) {
-    controls.start({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.2,
-        delay: 0.3,
-        ease: [0.6, -0.05, 0.01, 0.95],
-      },
-    });
-  } else {
-    controls.start({
-      opacity: 0,
-      y: -50,
-    });
-  }
-}, [inView, controls]);
-
- // Trigger animation when in view
- useEffect(() => {
-   if (inView) {
-     controls.start("visible");
-   }
- }, [inView, controls]);
 
     useEffect(() => {
         // Show the page content after 3 seconds (adjust this based on your video duration)
@@ -98,27 +48,34 @@ export default function Home() {
         <motion.section
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
+          transition={{ duration: 2, delay: 0.5 }}
+          ref={section4Animation.ref}
           className="hero-section min-w-100 bg-black relative">
       <div className="bg-orange-400 w-1 h-32 absolute top-16 right-10 transform -translate-x-14"></div>
       <div className="relative w-100 text-white min-h-screen overflow-hidden ">        
-        <header className="w-full px-8 py-4 flex top-2 justify-between items-center text-sm z-10 relative" ref={ref}>
+        <header className="w-full px-8 py-4 flex top-2 justify-between items-center text-sm z-10 relative">
         <motion.div
   className="text-xl font-bold flex"
 >
   <Image src='/gcore-logo.png' width={30} alt="logo" className="h-auto w-auto" height={30} />
   <motion.span
-    initial={{ opacity: 0, x: 50 }}
-    animate={inView ?{ opacity: 0, x: 50, } :{opacity: 1, x:0}}
-    transition={{ duration: 1.5, delay: 0.2 }} // Delay the text animation
+    initial="hidden"
+          animate={section4Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }} // Delay the text animation
   >
     CORE
   </motion.span>
 </motion.div>
             <motion.nav
-              initial={{ opacity: 0, x: -50 }}
-              animate={inView ?{ opacity: 0, x: -50 }: {opacity: 1, x: 0}}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              initial="hidden"
+          animate={section4Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
               className="flex nav-edit space-x-6 ms-28"
             >
               <a href="#" className="hover:underline flex">Products <FaChevronDown className="mt-1 ms-2"/></a>
@@ -130,16 +87,22 @@ export default function Home() {
             <div className="flex space-x-4">
 
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView? {opacity: 0, y: 50}:{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 }}
+              initial="hidden"
+              animate={section4Animation.controls}        
+              variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
               >
               <button className="px-4 py-2 border rounded-full bg-gray-700 text-white border-none bg-opacity-70">Contact us</button>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView? {opacity:0, y:50}:{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              initial="hidden"
+              animate={section4Animation.controls}        
+              variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
               >
               <button className="px-4 py-2 bg-orange-custom text-white rounded-full">Sign up for free</button>
               </motion.div>
@@ -149,9 +112,12 @@ export default function Home() {
         {/* Main Section */}
         <main className="flex flex-col items-center text-center space-y-6 mt-16 z-10 relative">
         <motion.p
-  initial={{ opacity: 0, x: -100 }}
-  animate={inView ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }}
-  transition={{ duration: 0.5, delay: 0.7 }}
+  initial="hidden"
+  animate={section4Animation.controls}        
+  variants={{
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+  }}
   className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg "
   style={{
     background: 'linear-gradient(to bottom, #222, #111)', // Adjust colors as needed
@@ -163,37 +129,49 @@ export default function Home() {
             <motion.h1
                 className="lg:text-8xl text-5xl bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent"
               >
-                <span className="">Inference</span>
+                <span>Inference</span>
                 <motion.span
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={inView? {opacity: 0, x: -20}:{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 1.2 }}
+                  initial="hidden"
+                  animate={section4Animation.controls}        
+                  variants={{
+                    hidden: { opacity: 0, x: -20 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+                  }}
                   className="ps-3"
                 >
                    at
                 </motion.span>
                 <motion.span
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={inView? {opacity: 0, x:20}:{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 1.4 }}
+                  initial="hidden"
+                  animate={section4Animation.controls}        
+                  variants={{
+                    hidden: { opacity: 0, x: 20 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+                  }}
                   className="ps-3"
                 >
                    the Edge
                 </motion.span>
               </motion.h1>
               <motion.p
-              initial={{ opacity: 0 }}
-              animate={inView? {opacity: 0}:{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.6 }}
+              initial="hidden"
+              animate={section4Animation.controls}        
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { duration: 1.5, delay: 1.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
               className="text-gray-500 max-w-2xl"
             >
               Boost your AI applications speed and efficiency globally by bringing inference closer to your users. 
               Enjoy customization and cost-efficiency for a best-in-class inference experience.
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView?{opacity: 0, y:50}:{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.8 }}
+              initial="hidden"
+              animate={section4Animation.controls}        
+              variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
               className="flex space-x-4"
             >
               <button className="px-6 py-2 bg-orange-custom rounded-full">Get started</button>
@@ -201,23 +179,22 @@ export default function Home() {
             </motion.div>
         </main>
   
-        <AiChip/>
+        <AiChip section4Animation={section4Animation}/>
       </div>
       </motion.section>
-      <section className="min-h-screen about-sec overflow-x-hidden">    
-      <header className={`justify-self-center ${isFixed ? 'fixed top-0 left-1/2 transform -translate-x-1/2 w-full z-50' : ''}`}>
+      <section ref={section3Animation.ref} className="about-sec overflow-x-hidden">    
+      <header className={`justify-self-center`}>
         <motion.nav
-        initial={{ opacity: 0, y: -50 }}
-        animate={controls}
-        transition={{
-          duration: 0.2,
-          delay: 0.3,
-          ease: [0.6, -0.05, 0.01, 0.95], // Custom easing for smoother animation
-        }}
+        initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
         
         className="flex space-x-8 nav-edit bg-black rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
       >
-                <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
+                <Image src='/gcore-orange.png' width={30} alt="logo" sizes="(max-width: 768px) 20px, 30px" className="h-auto w-auto rounded-lg" height={30} />
               <a href="#" className="hover:underline flex text-sm self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
               <a href="#" className="hover:underline flex text-sm self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
               <a href="#" className="hover:underline flex text-sm self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
@@ -227,21 +204,61 @@ export default function Home() {
             </motion.nav>
               </header>
               <main>
-                <ButtonGroup/>
+              <div className="flex justify-center mt-10">
+      <motion.div
+      initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: -100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+      className="border rounded-full bg-white p-1 flex">
+        <motion.button
+        initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="bg-black text-white p-2 rounded-full flex"
+        >
+          <motion.div 
+          >
+            <GiStarGate className="me-3 mt-1" /> 
+          </motion.div>
+            What is?
+        </motion.button>
+        <motion.button
+        
+          className="text-black p-2"
+        >
+          <motion.div 
+          >
+            How it works?
+          </motion.div>
+        </motion.button>
+      </motion.div>
+    </div>
                 <div className="container">
-                <div ref={ref} className="flex justify-center">
+                <div className="flex justify-center">
   <motion.h2
-    initial={{ opacity: 0 }}
-    animate={inView?{ opacity: 1 }: {opacity: 0}}
-    transition={{ duration: 1, delay: 0.2 }}
-    className="text-5xl text-center mt-2 space-x-4 max-w-3xl"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0},
+            visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+    className="md:text-5xl text-3xl text-center mt-2 space-x-4 max-w-3xl"
   >
     {["Use", "AI", "faster", "and", "more", "efficiently", "right", "on", "your", "device!"].map((word, index) => (
       <motion.span
         key={index}
-        initial={{ opacity: 0 }}
-        animate={inView?{ opacity: 1 }: {opacity: 0}}
-        transition={{ duration: 0.5, delay: 0.2 + index * 0.3 }}
+        initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0},
+            visible: { opacity: 1, transition: { duration: 0.2, delay: 0.3 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
         className="inline-block mr-1"
       >
         {word} {index === 3 && <br />}
@@ -249,15 +266,18 @@ export default function Home() {
     ))}
   </motion.h2>
 </div>
-                        <div className="grid mt-5 grid-cols-3">
+                        <div className="grid my-5 md:grid-cols-3 grid-cols-1">
                         <motion.div
-    initial={{ opacity: 0, y: 100 }}
-    animate={inView?{opacity:1, y:0}:{ opacity: 0, y: 100 }}
-    transition={{ duration: 1.5, delay: 0.2 }}
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
     className="flex justify-center relative"
   >
     <video
-      className="h-full w-96 rounded-2xl  object-cover "
+      className="h-full w-96 rounded-2xl  object-cover"
       autoPlay
       muted
       loop
@@ -265,17 +285,23 @@ export default function Home() {
       <source src='/star.mp4' type="video/mp4" />
     </video>
     <motion.h5
-  initial={{ opacity: 0 }}
-  animate={inView?{ opacity: 1 }: {opacity: 0}}
-  transition={{ duration: 1, delay: 1.7 }}
+  initial="hidden"
+  animate={section3Animation.controls}        
+  variants={{
+    hidden: { opacity: 0},
+    visible: { opacity: 1, transition: { duration: 1.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+  }}
   className="text-white absolute bottom-3 text-lg font-bold w-72 start-auto"
 >
   {["The", "Gcore", "Inference", "At", "the", "Edge:", "Speed", "Up", "Ai,", "Reduce", "Latency"].map((word, index) => (
     <motion.span
       key={index}
-      initial={{ opacity: 0 }}
-      animate={inView?{ opacity: 1 }: {opacity:0}}
-      transition={{ duration: 0.5, delay: 1.7 + index * 0.3 }}
+      initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0},
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 1.3 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
       className="inline-block mr-1"
     >
       {word}
@@ -285,10 +311,13 @@ export default function Home() {
   </motion.div>
 
   <motion.div
-      initial={{ opacity: 0, y: 100 }} // Initial position: 100 pixels below 
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }} 
-      transition={{ duration: 1, delay: 0.2 }}
-      className="col-span-2 relative bg-white p-3 h-96 rounded-2xl me-5"
+      initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 100 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+      className="col-span-2 relative  bg-white p-3 h-96 rounded-2xl me-5"
   >
     <div className="text-black text-2xl font-bold">
       Gcore Inference at the Edge reduces the<br/> latency of your ML model output and improves<br/> the performance of AI-enabled applications.
@@ -298,19 +327,24 @@ export default function Home() {
       Its particularly useful for AI apps that need immediate processing and minimal delay, like generative AI and real-time object detection.
     </div>
 
-    <div className=" absolute bottom-0 right-0 w-2/3 rounded-lg ps-10 pt-10" style={{backgroundColor: '#f7f7f7'}}>
+    <div className=" md:absolute relative bottom-0 right-0 md:w-2/3 w-full rounded-lg ps-10 pt-10" style={{backgroundColor: '#f7f7f7'}}>
     <motion.div   
-  ref={ref} 
-  initial={{ opacity: 0, x: 100 }}
-  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-  transition={{ duration: 1.5, delay: 0.2 }}
-  className="flex justify-end space-x-2"
+  initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+  className="md:flex block space-y-2 justify-end md:space-x-2 space-x-0"
 >
   <motion.div
-    className="bg-white w-auto flex rounded-full"
-    initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
-    transition={{ duration: 1.5, delay: 0.4 }}
+    className="bg-white md:w-auto w-52 flex rounded-full"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
   >
     <div className="me-1 mt-1 border rounded-full p-2">
       <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
@@ -318,29 +352,38 @@ export default function Home() {
     <p className="font-bold self-center me-2">Text generation</p>
   </motion.div>
   <motion.div
-    className="bg-white w-auto flex rounded-full"
-    initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-    transition={{ duration: 1.5, delay: 0.6 }}
+    className="bg-white md:w-auto w-52 flex rounded-full"    
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.6, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
   >
-    <div className="me-1 mt-1 border rounded-full p-2">
+    <div className="me-1 mt-1 border rounded-full px-2">
       {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
-      <h3 className="font-bold h-3 text-xl w-5 text-purple-800 ">S<span className="text-red-500">.</span></h3>
+      <h3 className="font-bold h-3 text-xl w-5 text-purple-800">S<span className="text-red-500">.</span></h3>
     </div>
     <p className="font-bold self-center me-2">Image generation</p>
   </motion.div>
 </motion.div>
     <motion.div 
-    className="flex justify-end mt-2 space-x-2" 
-    ref={ref} 
-  initial={{ opacity: 0, x: 100 }}
-  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-  transition={{ duration: 1.5, delay: 0.4 }}>
+    className="md:flex block md:space-y-0 space-y-2 justify-end mt-2 md:space-x-2 space-x-0" 
+  initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+  >
         <motion.div 
-        className="bg-white w-auto flex rounded-full"
-        initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
-    transition={{ duration: 1.5, delay: 0.6 }}
+        className="bg-white md:w-auto w-52 flex rounded-full"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.6, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
         >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
@@ -348,10 +391,13 @@ export default function Home() {
             <p className="font-bold self-center me-2">Speech recognition</p>
         </motion.div>
         <motion.div 
-        className="bg-white w-auto flex rounded-full"
-        initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }: {opacity:0, x:100}}
-    transition={{ duration: 1.5, delay: 0.8 }}
+        className="bg-white md:w-auto w-52 flex rounded-full"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
         >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/m-logo.png' alt='text-generation' width={20} height={20}/>
@@ -359,10 +405,13 @@ export default function Home() {
             <p className="font-bold self-center me-2">Text generation</p>
         </motion.div>
         <motion.div 
-        className="bg-white w-auto flex rounded-s-full"
-        initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-    transition={{ duration: 1.5, delay: 1 }}
+        className="bg-white md:w-auto w-52 flex rounded-s-full"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
         >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
@@ -371,33 +420,49 @@ export default function Home() {
         </motion.div>
     </motion.div>
     <motion.div
-    className="flex justify-end mt-2 mb-4 space-x-2"
-    initial={{ opacity: 0, x: 100 }}
-  animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-  transition={{ duration: 1.5, delay: 0.4 }}>
-        <motion.div className="bg-white w-auto flex rounded-full"
-        initial={{ opacity: 0, x: 100 }}
-    animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-    transition={{ duration: 1.5, delay: 1 }}>
+    className="md:flex block justify-end mt-2 mb-4 md:space-x-2 space-x-0 md:space-y-0 space-y-2"
+  initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+  >
+        <motion.div className="bg-white md:w-auto w-52 flex rounded-full"
+    initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+    >
           <div className="me-1 mt-1 border rounded-full p-2">
             {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
             <h3 className="font-bold h-3 text-xl w-5 text-purple-800">S<span className="text-red-500">.</span></h3>
           </div>
             <p className="font-bold self-center me-2">Image generation</p>
         </motion.div>
-        <motion.div className="bg-white w-auto flex rounded-full"
-        initial={{ opacity: 0, x: 100 }}
-        animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-        transition={{ duration: 1.5, delay: 1.2 }}>
+        <motion.div className="bg-white md:w-auto w-52 flex rounded-full"
+        initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+        >
           <div className="me-1 mt-1 border rounded-full p-2">
             <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
           </div>
             <p className="font-bold self-center me-2">Image classification</p>
         </motion.div>
-        <motion.div className="bg-white w-auto flex rounded-s-full"
-        initial={{ opacity: 0, x: 100 }}
-        animate={inView?{ opacity: 1, x: 0 }:{opacity: 0, x:100}}
-        transition={{ duration: 1.5, delay: 1.4 }}>
+        <motion.div className="bg-white md:w-auto w-52 flex rounded-s-full"
+        initial="hidden"
+          animate={section3Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, x: 100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 1.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+        >
           <div className="me-1 mt-1 border rounded-full p-2">
           <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
           </div>
@@ -421,15 +486,15 @@ export default function Home() {
             hidden: { opacity: 0, y: -50 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-          className="flex nav-edit space-x-8 bg-black border rounded-full text-white py-2 self-center mt-3 max-w-3xl px-2 justify-center"
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
         >
-          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto w-auto rounded-lg" height={30} />
-              <a href="#" className="hover:underline flex text-sm self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
-              <a href="#" className="hover:underline flex text-sm self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
-              <a href="#" className="hover:underline flex text-sm self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
-              <a href="#" className="hover:underline flex text-sm self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
-              <a href="#" className="hover:underline flex text-sm self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
-              <a href="#" className="hover:underline flex text-sm bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
         </motion.nav>
       </header>
 
@@ -453,7 +518,7 @@ export default function Home() {
       </div>
 
       {/* Title */}
-      <div className="flex justify-center ">
+      <div className="flex justify-center">
         <motion.h2
           initial="hidden"
           animate={section2Animation.controls}  
@@ -461,7 +526,7 @@ export default function Home() {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-          className="text-5xl text-center text-white mt-2 space-x-4 max-w-xl"
+          className="md:text-5xl text-2xl text-center text-white mt-2 space-x-4 max-w-xl"
         >
           {["Unleash", "your", "AI", "application's", "full", "potential"].map((word, index) => (
             <motion.span
@@ -481,7 +546,7 @@ export default function Home() {
       </div>
 
       {/* Videos with text */}
-      <div className="flex justify-between space-x-4 mt-12 pb-12 px-8">
+      <div className="grid md:grid-cols-3 md:space-x-4 grid-cols-1 mt-12 pb-12 px-8">
         {/* Left Video */}
         <motion.div
     initial="hidden"
@@ -490,10 +555,10 @@ export default function Home() {
             hidden: { opacity: 0, y: 100 },
             visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-    className="flex justify-center relative w-2/3"
+    className="flex justify-center col-span-2 h-full relative w-full"
   >
     <video
-      className="h-full w-full rounded-2xl  object-cover "
+      className="h-full w-full rounded-2xl  object-cover"
       autoPlay
       muted
       loop
@@ -507,7 +572,7 @@ export default function Home() {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { duration: 2, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-  className="text-white absolute top-3 text-lg font-bold w-72 start-10"
+  className="text-white absolute top-3 md:text-lg text-md font-bold w-72 md:start-10 start-0"
 >
   {["Low", "-", "latency", "global", "network"].map((word, index) => (
     <motion.span
@@ -531,7 +596,7 @@ initial="hidden"
             hidden: { opacity: 0, y: 100 },
             visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-className="text-slate-700 w-full absolute top-12 text-md font-bold start-10">Maximize model response time with our <span className='text-white'>160+ location CDN.</span></motion.p>
+className="text-slate-700 md:w-full w-72 absolute top-12 md:text-md text-sm font-bold md:start-10 start-0">Maximize model response time with our <span className='text-white'>160+ location CDN.</span></motion.p>
 <motion.p 
 initial="hidden"
           animate={section2Animation.controls}  
@@ -539,7 +604,7 @@ initial="hidden"
             hidden: { opacity: 0, y: 100 },
             visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">providing an average global latency of 30ms</motion.p>
+className="absolute md:top-16 top-24 text-md font-bold w-full md:start-10 start-0 text-slate-700">providing an average global latency of 30ms</motion.p>
   </motion.div>
 
         {/* Right Video */}
@@ -550,10 +615,10 @@ className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">pro
             hidden: { opacity: 0, y: 100 },
             visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-    className="flex justify-center relative w-1/3"
+    className="flex justify-center relative w-full"
   >
     <video
-      className="h-full w-full rounded-2xl  object-cover "
+      className="h-full w-full rounded-2xl object-cover "
       autoPlay
       muted
       loop
@@ -567,7 +632,7 @@ className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">pro
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { duration: 2, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
-  className="text-white absolute bottom-36 text-lg font-bold w-72 start-1"
+  className="text-white absolute md:bottom-36 bottom-28 md:text-lg text-md font-bold w-72 start-1"
 >
   {["Single", "end", "-", "point", "for","all", "AI", "tasks"].map((word, index) => (
     <motion.span
@@ -585,16 +650,20 @@ className="absolute top-16 text-md font-bold w-full start-10 text-slate-700">pro
   ))}
 </motion.h5>
 <motion.p 
-initial={{opacity: 1, y: 0}}
-animate={inView? {opacity: 0, y: 100}:{opacity: 1, y: 0}}
-transition={{ duration: 1, delay: 0.7 }}
-className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gcore offers automated infrastructured management for AI applications while offering real-time inference</motion.p>
+initial="hidden"
+animate={section2Animation.controls}  
+variants={{
+  hidden: { opacity: 0, y: 100 },
+  visible: { opacity: 1,y:0 , transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+}}
+className="text-slate-700 md:text-md text-sm md:w-96 w-72 absolute md:bottom-16 bottom-10 font-bold start-1">Gcore offers automated infrastructured management for AI applications while offering real-time inference</motion.p>
 
   </motion.div>
       </div>
     </section>
               
-    <section ref={sectionAnimation.ref} className="min-h-screen bg-black overflow-x-hidden">
+    <motion.section ref={sectionAnimation.ref} 
+    className="min-h-screen bg-black border-t-2 overflow-x-hidden">
       {/* Header */}
       <header className="justify-self-center">
         <motion.nav
@@ -616,9 +685,9 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
         </motion.nav>
       </header>
 
-      <main className="grid mt-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <main className="md:grid block md:space-y-0 space-y-4  mt-3 lg:grid-cols-3 gap-8 mx-3">
       <motion.div
-            className=" p-6 rounded-lg shadow-lg h-60 relative overflow-hidden"
+            className=" p-6 rounded-lg shadow-lg h-60 relative w-full overflow-hidden"
             initial="hidden"
           animate={sectionAnimation.controls}  
           variants={{
@@ -650,11 +719,18 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
               visible: { opacity: 1, y: 0, transition: { duration: 1.4, delay: 1, ease: [0.4, -0.05, 0.01, 0.95] } },
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+           <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <video
+        className="absolute w-full right-0 h-full bottom-0 object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+      >
+        <source src='/grid.mp4' type="video/mp4" />
+      </video>
             <div className="relative z-10">
-              <p className="text-white font-bold">Data privacy and security</p>
-              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
-              <p className="text-gray-400">Byee</p>
+              <p className="text-white font-bold">Unlimited Object storage</p>
+              <p className="text-gray-700">Use scalable <span className="font-bold">S3-compatible</span> cloud storage that grows with your needs</p>
             </div>
           </motion.div>
       <motion.div
@@ -667,14 +743,21 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <video
+        className="absolute w-full right-0 h-full bottom-0 object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+      >
+        <source src='/thunder.mp4' type="video/mp4" />
+      </video>
             <div className="relative z-10">
-              <p className="text-white font-bold">Data privacy and security</p>
-              <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
-              <p className="text-gray-400">Byee</p>
+              <p className="text-white font-bold">Pre-trained and custom ML models</p>
+              <p className="text-gray-700">Use pre-trained foundational models from the <span className='font-bold'>Gcore ML Model Hub</span> or your own trained models</p>
             </div>
           </motion.div>
       <motion.div
-            className="bg-gray-900 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            className="bg-gray-900 col-span-2 p-6 h-80 rounded-lg  shadow-lg relative overflow-hidden"
             initial="hidden"
             animate={sectionAnimation.controls}  
             variants={{
@@ -683,10 +766,17 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <video
+        className="absolute w-full right-0 h-full bottom-0 object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+      >
+        <source src='/cable.mp4' type="video/mp4" />
+      </video>
             <div className="relative z-10">
               <p className="text-white font-bold">Data privacy and security</p>
               <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
-              <p className="text-gray-400">Byee</p>
             </div>
           </motion.div>
       <motion.div
@@ -699,14 +789,303 @@ className="text-slate-700 text-md w-96 absolute bottom-16 font-bold start-1">Gco
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-black to-orange-600 opacity-10"></div>
+            <video
+        className="absolute w-full right-0 h-full bottom-0 object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+      >
+        <source src='/grid.mp4' type="video/mp4" />
+      </video>
             <div className="relative z-10">
               <p className="text-white font-bold">Data privacy and security</p>
               <p className="text-gray-700">Use pre-trained foundational models from the Gcore ML ModelHub or your own trained models.</p>
-              <p className="text-gray-400">Byee</p>
             </div>
           </motion.div>            
       </main>
-      </section>
+      </motion.section>
+
+      <motion.section ref={section5Animation.ref} 
+      className=" bg-black overflow-x-hidden border-t-2">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section5Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      {/* Subheading */}
+      <div className="flex justify-center mt-6">
+        <motion.p
+          initial="hidden"
+          animate={section5Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, x: -100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg w-44"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+        >
+          <span className="text-orange-500 text-lg">🪐</span>
+          <span>Global Network</span>
+        </motion.p>
+      </div>
+
+      {/* Title */}
+      <div className="flex justify-center">
+        <motion.h2
+          initial="hidden"
+          animate={section5Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-center text-white mt-2 space-x-4 max-w-xl"
+        >
+          {["A", "truly", "global", "network", "for", "lightning", "-","fast", "inference"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section5Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+        <motion.p
+         initial="hidden"
+          animate={section5Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1,y: 0, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },            
+          }}
+          className="px-4 py-1 text-slate-300 mt-3 text-sm font-medium rounded-full text-center space-x-2 shadow-lg "
+        >Gcore global network consists of more than 160 locations,</motion.p>
+        <motion.p
+         initial="hidden"
+          animate={section5Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="px-4 py-1 text-slate-300 text-sm font-medium rounded-full text-center space-x-2 shadow-lg "
+        >allowing you to reach your users anywhere in the world</motion.p>
+
+<motion.div
+initial="hidden"
+animate={section5Animation.controls}  
+variants={{
+  hidden: { opacity: 0, y: 100 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+}}
+>
+
+<video
+      className="h-full w-full rounded-2xl object-cover "
+      autoPlay
+      muted
+      loop
+    >
+      <source src='/full-earth.mp4' type="video/mp4" />
+    </video>
+      </motion.div>
+      </motion.section>
+      <motion.section ref={section6Animation.ref} 
+      className=" bg-white overflow-x-hidden">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section6Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+
+
+      {/* Title */}
+      <div className="flex justify-center mt-5">
+        <motion.h2
+          initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-center mt-2 space-x-4 max-w-xl"
+        >
+          {["Experience", "it", "now"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+        <motion.p
+         initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1,y: 0, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },            
+          }}
+          className="px-4 py-1 text-slate-300 mt-3 text-sm font-medium text-center"
+        >Try Gcore Inference at the Edge for yourself using</motion.p>
+        <motion.p
+         initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="px-4 py-1 text-slate-300 text-sm font-medium text-center"
+        >our playground</motion.p>
+
+<div className="flex justify-center">
+        <motion.div
+         initial="hidden"
+         animate={section6Animation.controls}  
+         variants={{
+           hidden: { opacity: 0, y: 50 },
+           visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+         }}
+        className="flex rounded-full bg-gradient-to-r from-sky-500 to-indigo-500"
+        >
+          <motion.div
+          initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0},
+            visible: { opacity: 1, transition: { duration: 2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="m-1 border rounded-full p-2 bg-white">
+      <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
+    </motion.div>
+    <motion.div 
+    initial="hidden"
+    animate={section6Animation.controls}  
+    variants={{
+      hidden: { opacity: 0},
+      visible: { opacity: 1, transition: { duration: 2, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+    }}
+    className="m-1 border rounded-full p-2 bg-white">
+          <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
+          </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0},
+             visible: { opacity: 1, transition: { duration: 2, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="m-1 border rounded-full p-2 bg-white">
+            {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
+            <h3 className="font-bold h-4 text-2xl w-5 text-purple-800">S<span className="text-red-500">.</span></h3>
+          </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0},
+             visible: { opacity: 1, transition: { duration: 2, delay: 1.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="m-1 border rounded-full p-2 bg-white">
+            <Image src='/m-logo.png' alt='text-generation' width={20} height={20}/>
+          </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0},
+             visible: { opacity: 1, transition: { duration: 2, delay: 1.6, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="m-1 border rounded-full p-2 bg-white">
+      <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/>
+    </motion.div>
+    <motion.div 
+     initial="hidden"
+     animate={section6Animation.controls}  
+     variants={{
+       hidden: { opacity: 0},
+       visible: { opacity: 1, transition: { duration: 2, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+     }}
+    className="m-1 border rounded-full p-2 bg-white">
+          <Image src='/gcore-orange.png' className="rounded-full" alt='text-generation' width={20} height={20}/>
+          </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0},
+             visible: { opacity: 1, transition: { duration: 2, delay: 2, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="m-1 border rounded-full p-2 bg-white">
+            {/* <Image src='/chatgpt.png' alt='text-generation' width={20} height={20}/> */}
+            <h3 className="font-bold h-4 text-2xl w-5 text-purple-800">S<span className="text-red-500">.</span></h3>
+          </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0},
+             visible: { opacity: 1, transition: { duration: 2, delay: 2.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="m-1 border rounded-full p-2 bg-white">
+            <Image src='/m-logo.png' alt='text-generation' width={20} height={20}/>
+          </motion.div>
+        </motion.div>        
+          </div>
+
+          <motion.div className="rounded-lg shadow-xl md:mx-10 bg-white">
+            <div className="flex justify-center">
+            <motion.div className="rounded-full bg-gradient-to-b p-10 from-sky-500 to-indigo-500">
+              <motion.h3 className="text-white font-bold text-center py-2">Discover the AI Realm</motion.h3>
+            </motion.div>
+            </div>
+          </motion.div>
+      </motion.section>
       </>
       )}
       </>
