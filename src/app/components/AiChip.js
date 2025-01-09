@@ -16,7 +16,7 @@ export default function AiChip({section4Animation}) {
         animate={section4Animation.controls}        
         variants={{
           hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          visible: { opacity: 1, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
         }}
         className="bg-gray-900 w-24 h-24 z-50 rounded-3xl flex items-center justify-center shadow-lg">
           <span className="text-3xl font-bold">AI</span>
@@ -31,7 +31,7 @@ export default function AiChip({section4Animation}) {
           animate={section4Animation.controls}        
           variants={{
             hidden: { opacity: 0},
-            visible: { opacity: 1, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+            visible: { opacity: 1, transition: { duration: 1.5, delay: 1.7, ease: [0.6, -0.05, 0.01, 0.95] } },
           }}
           className="bg-gray-900 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">A</span>
@@ -43,7 +43,7 @@ export default function AiChip({section4Animation}) {
            animate={section4Animation.controls}        
            variants={{
              hidden: { opacity: 0},
-             visible: { opacity: 1, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+             visible: { opacity: 1, transition: { duration: 1.5, delay: 1.9, ease: [0.6, -0.05, 0.01, 0.95] } },
            }}
           className="bg-gray-900 w-12 h-12 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">A</span>
@@ -55,7 +55,7 @@ export default function AiChip({section4Animation}) {
            animate={section4Animation.controls}        
            variants={{
              hidden: { opacity: 0},
-             visible: { opacity: 1, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+             visible: { opacity: 1, transition: { duration: 1.5, delay: 2.1, ease: [0.6, -0.05, 0.01, 0.95] } },
            }}
           className="bg-gray-900 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">S.</span>
@@ -67,7 +67,7 @@ export default function AiChip({section4Animation}) {
            animate={section4Animation.controls}        
            variants={{
              hidden: { opacity: 0},
-             visible: { opacity: 1, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+             visible: { opacity: 1, transition: { duration: 1.5, delay: 2.3, ease: [0.6, -0.05, 0.01, 0.95] } },
            }}
           className="bg-gray-900 w-12 h-12 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">S</span>
@@ -79,7 +79,7 @@ export default function AiChip({section4Animation}) {
            animate={section4Animation.controls}        
            variants={{
              hidden: { opacity: 0},
-             visible: { opacity: 1, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+             visible: { opacity: 1, transition: { duration: 1.5, delay: 2.5, ease: [0.6, -0.05, 0.01, 0.95] } },
            }}
           className="bg-gray-900 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">M.</span>
@@ -91,7 +91,7 @@ export default function AiChip({section4Animation}) {
            animate={section4Animation.controls}        
            variants={{
              hidden: { opacity: 0},
-             visible: { opacity: 1, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+             visible: { opacity: 1, transition: { duration: 1.5, delay: 2.7, ease: [0.6, -0.05, 0.01, 0.95] } },
            }}
           className="bg-gray-900 w-16 h-16 rounded-2xl flex items-center justify-center shadow-md">
             <span className="text-2xl font-bold bg-gradient-to-b from-gray-800 to-white bg-clip-text text-transparent">S</span>

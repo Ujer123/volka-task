@@ -15,6 +15,7 @@ export default function Home() {
     const section4Animation = useInViewComp()
     const section5Animation = useInViewComp()
     const section6Animation = useInViewComp()
+    const section7Animation = useInViewComp()
 
 
     useEffect(() => {
@@ -1078,13 +1079,323 @@ variants={{
         </motion.div>        
           </div>
 
-          <motion.div className="rounded-lg shadow-xl md:mx-10 bg-white">
-            <div className="flex justify-center">
-            <motion.div className="rounded-full bg-gradient-to-b p-10 from-sky-500 to-indigo-500">
-              <motion.h3 className="text-white font-bold text-center py-2">Discover the AI Realm</motion.h3>
-            </motion.div>
+          <motion.div 
+           initial="hidden"
+           animate={section6Animation.controls}  
+           variants={{
+             hidden: { opacity: 0, y: 100},
+             visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 2.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+           }}
+          className="rounded-lg shadow-2xl mt-10 md:mx-20 bg-white">
+            <div className='flex justify-center mb-10 pt-10'>
+          <motion.div className="rounded-t-full bg-gradient-to-b p-10 z-0 from-sky-500 to-indigo-500 opacity-40">
+  <motion.h3 className="text-white font-bold text-center py-2 z-10">
+    Discover the AI Realm
+  </motion.h3>
+</motion.div>
             </div>
+
+          <motion.div className="grid md:grid-cols-2 md:gap-4 md:mx-10">
+            <motion.div
+             initial="hidden"
+             animate={section6Animation.controls}  
+             variants={{
+               hidden: { opacity: 0, y: 100},
+               visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 2.4, ease: [0.6, -0.05, 0.01, 0.95] } },
+             }}
+            className="flex space-x-5 border rounded-lg space-y-2 my-2">
+              <div>
+              <Image src="/chatgpt.png" width={20} height={20} className='w-auto h-auto ms-3 mt-3' alt='text image'/>
+              </div>
+              <div>
+                <h5 className="font-bold text-black">Text Generate</h5>
+                <p className='text-slate-400'>A white robot on a black Harley  riding down a desert road</p>
+              </div>
           </motion.div>
+            <motion.div 
+              initial="hidden"
+              animate={section6Animation.controls}  
+              variants={{
+                hidden: { opacity: 0, y: 100},
+                visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 2.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
+            className="flex space-x-5 border rounded-lg space-y-2 my-2">
+              <div>
+              <Image src="/chatgpt.png" width={20} height={20} className='w-auto h-auto ms-3 mt-3' alt='text image'/>
+              </div>
+              <div>
+                <h5 className="font-bold text-black">Text Generate</h5>
+                <p className='text-slate-400'>A white robot on a black Harley  riding down a desert road</p>
+              </div>
+          </motion.div>
+            <motion.div 
+              initial="hidden"
+              animate={section6Animation.controls}  
+              variants={{
+                hidden: { opacity: 0, y: 100},
+                visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 2.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
+            className="flex space-x-5 border rounded-lg space-y-2 my-2">
+              <div>
+              <Image src="/chatgpt.png" width={20} height={20} className='w-auto h-auto ms-3 mt-3' alt='text image'/>
+              </div>
+              <div>
+                <h5 className="font-bold text-black">Text Generate</h5>
+                <p className='text-slate-400'>A white robot on a black Harley  riding down a desert road</p>
+              </div>
+          </motion.div>
+            <motion.div 
+              initial="hidden"
+              animate={section6Animation.controls}  
+              variants={{
+                hidden: { opacity: 0, y: 100},
+                visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 3, ease: [0.6, -0.05, 0.01, 0.95] } },
+              }}
+            className="flex space-x-5 border rounded-lg space-y-2 my-2">
+              <div>
+              <Image src="/chatgpt.png" width={20} height={20} className='w-auto h-auto ms-3 mt-3' alt='text image'/>
+              </div>
+              <div>
+                <h5 className="font-bold text-black">Text Generate</h5>
+                <p className='text-slate-400'>A white robot on a black Harley  riding down a desert road</p>
+              </div>
+          </motion.div>        
+          </motion.div>
+
+          <motion.div 
+          initial="hidden"
+          animate={section6Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, y: 100},
+            visible: { opacity: 1, y: 0, transition: { duration: 2, delay: 3.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className='rounded-full bg-gray-200 md:mx-10 mt-6 flex justify-between'>
+            <input className="border-0 bg-transparent p-2 placeholder-black font-bold w-full rounded-full" placeholder='A white rabbit on a black Harley Davidson riding down a desert road'/>
+            <button className="bg-white text-black rounded-md me-6 w-10 my-1">H</button>
+            </motion.div>          
+            <motion.h5
+            initial="hidden"
+            animate={section6Animation.controls}  
+            variants={{
+              hidden: { opacity: 0, x: 50},
+              visible: { opacity: 1, x: 0, transition: { duration: 2, delay: 3, ease: [0.6, -0.05, 0.01, 0.95] } },
+            }}
+            className='text-slate-400 text-center mt-4 mb-6 pb-10'>Free research Preview. May produce inaccurate information about people, places, or facts.</motion.h5>
+          </motion.div>
+
+      </motion.section>
+
+      <motion.section ref={section7Animation.ref} 
+      className="bg-white overflow-x-hidden border-t-black">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section7Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+
+
+      {/* Title */}
+      <div className="flex justify-center mt-5">
+        <motion.h2
+          initial="hidden"
+          animate={section7Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-center mt-2 space-x-4 max-w-xl"
+        >
+          {["A", "flexible", "solution", "for", "diverse", "use", "cases"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section7Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+
+      <div className="grid md:grid-cols-3 justify-between items-center gap-8 p-6 md:p-12">
+      
+      {/* IT / Technology Section */}
+      <motion.div 
+      initial="hidden"
+      animate={section7Animation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/IT-tech.png'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">IT / Technology</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>Generative AI applications</li>
+          <li>Chatbots and virtual assistants</li>
+          <li>AI tools for software engineers</li>
+          <li>Data augmentation</li>
+        </ul>
+      </motion.div>
+      
+      {/* Retail Section */}
+      <motion.div 
+      initial="hidden"
+      animate={section7Animation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/visa.png'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">Retail</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>Smart grocery with self-checkout and merchandising</li>
+          <li>
+            Real-time user behavior analysis and active feedback: content
+            generation, predictions, recommendations
+          </li>
+          <li>Data augmentation</li>
+        </ul>       
+      </motion.div>
+      
+      {/* Automotive Section */}
+      <motion.div 
+       initial="hidden"
+       animate={section7Animation.controls}        
+       variants={{
+         hidden: { opacity: 0, y: 100 },
+         visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+       }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/location.jpg'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">Automotive</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>
+            Fast response to changes in road conditions and incidents in
+            self-driving vehicles
+          </li>
+          <li>Advanced driver assistants</li>
+          <li>Vehicle personalization</li>
+        </ul>        
+      </motion.div>
+      <motion.div 
+      initial="hidden"
+      animate={section7Animation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/IT-tech.png'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">Gaming</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>AI content and map generation</li>
+          <li>AI bot real-time customization and conversation</li>
+          <li>Real-time player analytics</li>
+          <li>Best game performation</li>
+        </ul>
+      </motion.div>
+      
+      {/* Hospitality Section */}
+      <motion.div 
+      initial="hidden"
+      animate={section7Animation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/visa.png'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">Hospitality</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>Personalized destination and accomodation recommendations</li>
+          <li>
+            Real-time user behavior analysis and active feedback: content
+            generation, predictions, recommendations
+          </li>
+          <li>Data augmentation</li>
+        </ul>       
+      </motion.div>
+      
+      {/* Automotive Section */}
+      <motion.div 
+       initial="hidden"
+       animate={section7Animation.controls}        
+       variants={{
+         hidden: { opacity: 0, y: 100 },
+         visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+       }}
+      className="bg-white shadow-md rounded-lg p-6 w-full">
+      <Image
+      src='/location.jpg'
+      width={100}
+      height={100}
+      className="h-60 w-full rounded-t-xl"
+      alt='IT tech'
+      />
+        <h3 className="text-lg font-semibold mb-4">Automotive</h3>
+        <ul className="list-disc list-inside text-gray-600">
+          <li>
+            Fast response to changes in road conditions and incidents in
+            self-driving vehicles
+          </li>
+          <li>Advanced driver assistants</li>
+          <li>Vehicle personalization</li>
+        </ul>        
+      </motion.div>
+    </div>
       </motion.section>
       </>
       )}
