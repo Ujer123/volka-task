@@ -1,11 +1,12 @@
 'use client'
-import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { GiStarGate } from "react-icons/gi"; 
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaFacebook, FaTwitter, FaLinkedin, FaYoutube, FaInstagram,FaTiktok } from "react-icons/fa";
 import AiChip from "./AiChip";
 import useInViewComp from "./useInViewComp";
+import Link from "next/link";
 
 export default function Home() {
     const [showPage, setShowPage] = useState(false);
@@ -16,7 +17,17 @@ export default function Home() {
     const section5Animation = useInViewComp()
     const section6Animation = useInViewComp()
     const section7Animation = useInViewComp()
+    const section8Animation = useInViewComp()
+    const section9Animation = useInViewComp()
+    const section10Animation = useInViewComp()
+    const section11Animation = useInViewComp()
+    const footerAnimation = useInViewComp()
 
+    const [open, setOpen] = useState(null);
+
+    const toggle = (index) => {
+      setOpen(open === index ? null : index); // Open or close based on the index
+    };
 
     useEffect(() => {
         // Show the page content after 3 seconds (adjust this based on your video duration)
@@ -1186,7 +1197,7 @@ variants={{
       </motion.section>
 
       <motion.section ref={section7Animation.ref} 
-      className="bg-white overflow-x-hidden border-t-black">
+      className="bg-white overflow-x-hidden border-t-black border">
       {/* Header */}
       <header className="justify-self-center">
         <motion.nav
@@ -1208,7 +1219,23 @@ variants={{
         </motion.nav>
       </header>
 
-
+      <div className="flex justify-center mt-6">
+        <motion.p
+          initial="hidden"
+          animate={section7Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, x: -100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg w-60"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+        >
+          <span className="text-white text-lg">🪐</span>
+          <span>Model Serving, Your Way</span>
+        </motion.p>
+      </div>
 
       {/* Title */}
       <div className="flex justify-center mt-5">
@@ -1323,7 +1350,7 @@ variants={{
       animate={section7Animation.controls}        
       variants={{
         hidden: { opacity: 0, y: 100 },
-        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
       }}
       className="bg-white shadow-md rounded-lg p-6 w-full">
       <Image
@@ -1348,7 +1375,7 @@ variants={{
       animate={section7Animation.controls}        
       variants={{
         hidden: { opacity: 0, y: 100 },
-        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.8, ease: [0.6, -0.05, 0.01, 0.95] } },
       }}
       className="bg-white shadow-md rounded-lg p-6 w-full">
       <Image
@@ -1375,7 +1402,7 @@ variants={{
        animate={section7Animation.controls}        
        variants={{
          hidden: { opacity: 0, y: 100 },
-         visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+         visible: { opacity: 1, y: 0, transition: { duration: 1.5, delay: 2.1, ease: [0.6, -0.05, 0.01, 0.95] } },
        }}
       className="bg-white shadow-md rounded-lg p-6 w-full">
       <Image
@@ -1397,9 +1424,941 @@ variants={{
       </motion.div>
     </div>
       </motion.section>
+
+      <motion.section ref={section8Animation.ref} 
+      className="bg-black overflow-x-hidden border-t-black border">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section8Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      <div className="flex justify-center mt-6">
+        <motion.p
+          initial="hidden"
+          animate={section8Animation.controls}  
+          variants={{
+            hidden: { opacity: 0, x: -100 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="px-4 py-1 text-white text-sm font-medium rounded-full flex items-center space-x-2 shadow-lg w-60"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+        >
+          <span className="text-white text-lg">🪐</span>
+          <span>Model Serving, Your Way</span>
+        </motion.p>
+      </div>
+
+      {/* Title */}
+      <div className="flex justify-center mt-5">
+        <motion.h2
+          initial="hidden"
+          animate={section8Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-white text-center mt-2 space-x-4 max-w-4xl"
+        >
+          {["Use", "dedicated", "GPUs", "to", "scale", "custom", "models", "and", "production", "apps"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section8Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:my-10 gap-6 md:mx-10">
+        {/* Card 1 */}
+        <motion.div 
+        initial="hidden"
+        animate={section8Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="bg-transparent border text-white rounded-3xl shadow-lg p-6 w-full h-96">
+          <h3 className="text-sm font-bold mb-4 text-center">1x NVIDIA L40S GPU</h3>
+          <p className="text-4xl font-bold mb-4 text-center">€2.40 <span className="text-lg font-normal text-slate-500">/month</span></p>
+          <hr className="mt-5 mb-7"/>
+          <ul className="space-y-2 mb-6">
+            <li className="flex items-center">
+              <span className="mr-2">⚙️</span> 16vCPU memory
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">🖥️</span> 48GB GPU memory
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">💾</span> 232GB RAM
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">✨</span> 4B–21B parameters
+            </li>
+          </ul>
+          <hr className="mt-5 mb-7"/>
+          <button className="w-full rounded-full bg-gray-900 hover:bg-orange-600 text-white py-2 px-4">
+            Order Now
+          </button>
+        </motion.div>
+
+        {/* Card 2 */}
+        <motion.div 
+        initial="hidden"
+        animate={section8Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="relative w-full h-96 p-6 rounded-3xl shadow-lg bg-black text-white overflow-hidden">
+      {/* Static Border */}
+      <div className="absolute inset-0 border border-white rounded-3xl"></div>
+
+      {/* Animated Border */}
+      <motion.div
+        className="absolute border-2 border-orange-500 rounded-3xl"
+        initial={{ x: "-100%", y: 0 }}
+        animate={{
+          x: ["-100%", "0%", "0%", "-100%"],
+          y: ["0%", "0%", "100%", "100%"],
+        }}
+        transition={{
+          duration: 6, // Total duration for one animation cycle
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{
+          width: "calc(100% + 8px)",
+          height: "calc(100% + 8px)",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10">
+        <p className="text-sm font-bold mb-4 text-center">2x NVIDIA L40S GPU</p>
+        <h3 className="text-4xl font-bold mb-4 text-center">
+          €9.30 <span className="text-lg font-normal">/month</span>
+        </h3>
+        <hr className="mt-5 mb-7 border-white" />
+        <ul className="space-y-2 mb-6">
+          <li className="flex items-center">
+            <span className="mr-2">⚙️</span> 32vCPU
+          </li>
+          <li className="flex items-center">
+            <span className="mr-2">🖥️</span> 96GB GPU memory
+          </li>
+          <li className="flex items-center">
+            <span className="mr-2">💾</span> 464GB RAM
+          </li>
+          <li className="flex items-center">
+            <span className="mr-2">✨</span> 21B–41B parameters
+          </li>
+        </ul>
+        <hr className="mt-5 mb-7 border-white" />
+        <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-full">
+          Order Now
+        </button>
+      </div>
+    </motion.div>
+
+        {/* Card 3 */}
+        <motion.div 
+        initial="hidden"
+        animate={section8Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.9, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="bg-transparent border text-white rounded-3xl shadow-lg p-6 w-full h-96">
+        <p className="text-sm font-bold mb-4 text-center">2x NVIDIA L40S GPU</p>
+        <h3 className="text-4xl font-bold mb-4 text-center">€4.70 <span className="text-lg font-normal">/month</span></h3>
+        <hr className="mt-5 mb-7"/>
+          <ul className="space-y-2 mb-6">
+            <li className="flex items-center">
+              <span className="mr-2">⚙️</span> 64vCPU
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">🖥️</span> 192GB GPU memory
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">💾</span> 928GB RAM
+            </li>
+            <li className="flex items-center">
+              <span className="mr-2">✨</span> 41B–70B parameters
+            </li>
+          </ul>
+          <hr className="mt-5 mb-7"/>
+          <button className="w-full rounded-full bg-gray-900 hover:bg-orange-600 text-white py-2 px-4">
+            Order Now
+          </button>
+        </motion.div>
+      </div>
+      </motion.section>
+      <motion.section ref={section9Animation.ref} 
+      className="bg-black overflow-x-hidden h-screen border-t-black border">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      {/* Title */}
+      <div className="flex justify-center mt-5">
+        <motion.h2
+          initial="hidden"
+          animate={section9Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-white text-center mt-2 space-x-4 max-w-4xl"
+        >
+          {["Frequently", "asked", "questions"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section9Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+
+      <div className="bg-black text-white flex flex-col items-center justify-center p-4 mt-5">
+      <div className="w-full">
+        <div className="space-y-4">
+          {/* FAQ 1 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b border-gray-600 rounded-3xl"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+          >
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"              
+              onClick={() => toggle(1)}
+            >
+              <span className='mx-5'>{open === 1 ? "-" : <FaChevronDown />}</span>
+              <span className="text-lg font-semibold">What is AI inference?</span>
+            </button>
+            {open === 1 && (
+              <div className="text-gray-300 pb-4">
+                Its particularly useful for AI apps that need immediate
+                processing and minimal delay, like generative AI and real-time
+                object detection.
+              </div>
+            )}
+          </motion.div>
+
+          {/* FAQ 2 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b border-gray-600 rounded-3xl"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}>
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"
+              onClick={() => toggle(2)}
+            >
+              <span className="mx-5">{open === 2 ? "-" : <FaChevronDown/>}</span>
+              <span className="text-lg font-semibold">
+                What is the difference between AI inference at the edge and in
+                the cloud?
+              </span>
+            </button>
+            {open === 2 && (
+              <div className="text-gray-300 pb-4">
+                AI inference at the edge happens on local devices, ensuring low
+                latency and privacy, while cloud inference processes data on
+                remote servers, offering higher computational power but
+                introducing latency.
+              </div>
+            )}
+          </motion.div>
+
+          {/* FAQ 3 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b border-gray-600 rounded-3xl"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+          >
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"
+              onClick={() => toggle(3)}
+            >
+              <span className='mx-5'>{open === 3 ? "-" : <FaChevronDown/>}</span>
+              <span className="text-lg font-semibold">
+                What are the key benefits of Gcore Inference at the Edge for
+                end users?
+              </span>
+            </button>
+            {open === 3 && (
+              <div className="text-gray-300 pb-4">
+                Benefits include faster processing, reduced latency, enhanced
+                privacy, and reliability in environments with limited
+                connectivity.
+              </div>
+            )}
+          </motion.div>
+
+          {/* FAQ 4 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.6, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b border-gray-600 rounded-3xl"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}>
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"
+              onClick={() => toggle(4)}
+              >
+              <span className='mx-5'>{open === 4 ? "-" : <FaChevronDown/>}</span>
+              <span className="text-lg font-semibold">
+                Is Gcore Inference at the Edge suitable for AIoT systems?
+              </span>
+            </button>
+            {open === 4 && (
+              <div className="text-gray-300 pb-4">
+                Yes, it is suitable as it provides fast, reliable, and
+                low-latency solutions tailored for AIoT systems.
+              </div>
+            )}
+          </motion.div>
+
+          {/* FAQ 5 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.9, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b rounded-3xl space-x-5 border-gray-600"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+          >
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"
+              onClick={() => toggle(5)}
+              >
+              <span className='mx-5'>{open === 5 ? "-" : <FaChevronDown/>}</span>
+              <span className="text-lg font-semibold">
+                Why is the NVIDIA L40S GPU good for AI inference?
+              </span>
+            </button>
+            {open === 5 && (
+              <div className="text-gray-300 pb-4">
+                The NVIDIA L40S GPU offers high-performance computing tailored
+                for AI inference tasks, enabling faster and more efficient
+                processing of complex models.
+              </div>
+            )}
+          </motion.div>
+          {/* FAQ 6 */}
+          <motion.div 
+          initial="hidden"
+          animate={section9Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 2.1, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="border-b rounded-3xl space-x-5 border-gray-600"
+          style={{
+            background: 'linear-gradient(to bottom, #222, #111)',
+          }}
+          >
+            <button
+              className="w-full text-left flex items-center py-4 focus:outline-none"
+              onClick={() => toggle(6)}
+              >
+              <span className='mx-5'>{open === 6 ? "-" : <FaChevronDown/>}</span>
+              <span className="text-lg font-semibold">
+                Why is the NVIDIA L40S GPU good for AI inference?
+              </span>
+            </button>
+            {open === 6 && (
+              <div className="text-gray-300 pb-4">
+                The NVIDIA L40S GPU offers high-performance computing tailored
+                for AI inference tasks, enabling faster and more efficient
+                processing of complex models.
+              </div>
+            )}
+          </motion.div>
+        </div>
+      </div>
+    </div>
+      </motion.section>
+      <motion.section ref={section10Animation.ref} 
+      className="bg-black overflow-x-hidden border-t-black border">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section10Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      <motion.div 
+      initial="hidden"
+      animate={section10Animation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="h-screen relative mx-10 mb-10 bg-black flex items-center justify-center">
+  {/* Gradient Background */}
+  <div className="absolute inset-0">
+        <div className="h-full w-full rounded-b-3xl bg-gradient-to-t from-orange-600 via-black to-black"></div>
+        <div className="absolute inset-x-0 rounded-b-3xl bottom-0 h-48 bg-gradient-to-t from-white to-transparent"></div>
+      </div>
+
+  {/* Content */}
+  <div className="relative text-center">
+    {/* Title */}
+    <h1 className="text-4xl md:text-5xl font-bold text-white">
+      Contact us to discuss your project
+    </h1>
+
+    {/* Subtitle */}
+    <p className="text-gray-400 mt-4 max-w-lg mx-auto">
+      Get in touch with us, and we’ll guide you through running your ML model on Gcore Inference at the Edge. Together, we’ll explore how our service can benefit your end users.
+    </p>
+
+    {/* Button */}
+    <button className="mt-6 px-6 py-3 bg-white text-black font-medium rounded-full shadow-lg hover:bg-gray-200">
+      Talk to an expert
+    </button>
+  </div>
+</motion.div>
+
+      </motion.section>
+      <motion.section ref={section11Animation.ref} 
+      className="bg-black overflow-x-hidden border-t-black border">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={section11Animation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+      {/* Title */}
+      <div className="flex justify-center mt-5">
+        <motion.h2
+          initial="hidden"
+          animate={section11Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="md:text-5xl text-2xl text-white text-center mt-2 space-x-4 max-w-4xl"
+        >
+          {["Try", "other", "Gcore", "products"].map((word, index) => (
+            <motion.span
+            key={index}            
+            initial="hidden"
+          animate={section11Animation.controls}  
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { duration: 1.7, delay: 1.5 + index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+              className="inline-block mr-1"
+            >
+              {word} {index === 3 && <br />}
+            </motion.span>
+          ))}
+        </motion.h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 md:my-10 gap-6 md:mx-10">
+        {/* Card 1 */}
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="border text-white rounded-3xl shadow-lg p-6 w-full h-96"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+          <div className="flex mt-10 justify-center items-center w-12 h-12 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">📦</span>
+          </div>         
+          <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+          <hr className="mt-5 mb-7"/>
+          <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+        </motion.div>
+
+        {/* Card 2 */}
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="relative w-full border h-96 p-6 rounded-3xl shadow-lg text-white overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+
+      {/* Content */}
+      <div className="relative z-10">
+      <div className="flex justify-center items-center w-12 h-12 mt-10 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">📷</span>
+          </div>
+          <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+        <hr className="mt-5 mb-7 border-white" />
+        <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+      </div>
+    </motion.div>
+
+        {/* Card 3 */}
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.9, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="border text-white rounded-3xl shadow-lg p-6 w-full h-96"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+         <div className="flex justify-center mt-10 items-center w-12 h-12 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">🔥</span>
+          </div>
+        <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+          <hr className="mt-5 mb-7"/>
+          <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+        </motion.div>
+
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 2.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="border text-white rounded-3xl shadow-lg p-6 w-full h-96"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+          <div className="flex mt-10 justify-center items-center w-12 h-12 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">📦</span>
+          </div>         
+          <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+          <hr className="mt-5 mb-7"/>
+          <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+        </motion.div>
+
+        {/* Card 5 */}
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 2.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="relative w-full border h-96 p-6 rounded-3xl shadow-lg text-white overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+
+      {/* Content */}
+      <div className="relative z-10">
+      <div className="flex justify-center items-center w-12 h-12 mt-10 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">📷</span>
+          </div>
+          <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+        <hr className="mt-5 mb-7 border-white" />
+        <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+      </div>
+    </motion.div>
+
+        {/* Card 6 */}
+        <motion.div 
+        initial="hidden"
+        animate={section11Animation.controls}  
+        variants={{
+          hidden: { opacity: 0, y: 100 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 2.9, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        className="border text-white rounded-3xl shadow-lg p-6 w-full h-96"
+        style={{
+          background: 'linear-gradient(to bottom, #222, #111)',
+        }}
+        >
+         <div className="flex justify-center mt-10 items-center w-12 h-12 bg-gradient-to-r from-orange-600 to-red-500 rounded-full mb-4">
+            {/* Example Icon */}
+            <span className="text-white">🔥</span>
+          </div>
+          <div className="mb-6">
+            <h5 className='text-white font-bold'>AI GPU Infrastructure</h5>
+            <p>Gcore AI GPU infrastructure is designed to deliver high-performance, low-latency inference on edge devices. Our dedicated infrastructure enables you to scale your ML models to handle demanding workloads.</p>
+          </div>
+          <hr className="mt-5 mb-7"/>
+          <a
+            href="#"
+            className="text-white flex items-center space-x-1 hover:underline"
+          >
+            <span className="me-5">Learn More</span>
+            <span>&gt;</span>
+          </a>
+        </motion.div>
+      </div>
+      </motion.section>
+
+      <motion.section ref={footerAnimation.ref} 
+      className="bg-black min-h-screen overflow-x-hidden border-t-black border">
+      {/* Header */}
+      <header className="justify-self-center">
+        <motion.nav
+          initial="hidden"
+          animate={footerAnimation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+          className="flex nav-edit md:space-x-8 space-x-2 bg-black border rounded-full text-white md:py-2 py-0 self-center mt-3 md:max-w-3xl max-w-xl px-2 justify-center"
+        >
+          <Image src='/gcore-orange.png' width={30} alt="logo" className="h-auto md:w-auto w-24 rounded-lg" height={30} />
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Products <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Pricing <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Resources <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Partners <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs self-center">Why Gcore <FaChevronDown className="mt-1 ms-2"/></a>
+              <a href="#" className="hover:underline flex md:text-sm text-xs bg-white text-black rounded-md self-center py-1 px-2 font-bold">Sign up for free</a>
+        </motion.nav>
+      </header>
+
+
+      <footer className="text-white py-8 bg-black mt-20">
+  <div
+    className="container mx-4 grid md:grid-cols-6 justify-between items-start"
+    style={{ backgroundImage: 'url(/footer-bg.jpg)', backgroundSize: 'cover' }}
+  >
+    <div className="mb-6 md:mb-0 col-span-2">
+      <motion.div
+      initial="hidden"
+      animate={footerAnimation.controls}        
+      variants={{
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+      }}
+      className="text-xl font-bold flex">
+        <Image
+          src="/gcore-logo.png"
+          width={30}
+          alt="logo"
+          className="h-auto w-auto rounded-full"
+          height={30}
+        />
+        <motion.span
+          initial="hidden"
+          animate={footerAnimation.controls}
+          variants={{
+            hidden: { opacity: 0, x: 50 },
+            visible: { opacity: 1, x: 0, transition: { duration: 1.5, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+        >
+          CORE
+        </motion.span>
+      </motion.div>
+      <motion.p 
+        initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+      className="text-sm w-80 text-gray-400">
+        Powerful solutions to help your business grow globally. Experience our superior performance, proven by the largest online businesses.
+      </motion.p>
+      <div className="flex mt-4">
+        <motion.a 
+          initial="hidden"
+          animate={footerAnimation.controls}        
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+          }}
+        href="#" className="text-white mr-2">
+          <FaFacebook className="text-gray-700" />
+        </motion.a>
+        <motion.a 
+         initial="hidden"
+         animate={footerAnimation.controls}        
+         variants={{
+           hidden: { opacity: 0, y: 50 },
+           visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.8, ease: [0.6, -0.05, 0.01, 0.95] } },
+         }}
+        href="#" className="text-white mr-2">
+          <FaTwitter className="text-gray-700" />
+        </motion.a>
+        <motion.a 
+        initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 0.9, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        href="#" className="text-white mr-2">
+          <FaLinkedin className="text-gray-700" />
+        </motion.a>
+        <motion.a 
+        initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        href="#" className="text-white mr-2">
+          <FaYoutube className="text-gray-700" />
+        </motion.a>
+        <motion.a 
+        initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.1, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        href="#" className="text-white mr-2">
+          <FaInstagram className="text-gray-700" />
+        </motion.a>
+        <motion.a 
+        initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.2, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+        href="#" className="text-white mr-2">
+          <FaTiktok className="text-gray-700" />
+        </motion.a>
+      </div>
+    </div>
+
+    {/* Footer Sections */}
+    {[
+      { title: 'Products', links: ['Cdn', 'Hosting', 'Streaming Platform', 'Storage', 'DDoS Protection', 'Software Development', 'Cloud', 'IT Infrastructure Management'] },
+      { title: 'Company', links: ['About', 'Customers', 'Case Studies', 'Careers', 'Blog', 'Press', 'Legal Information', 'Site Map'] },
+      { title: 'Resources', links: ['Status Page', 'Api Documentation', 'Internet Peering Points', 'Product Documentation', 'Looking Glass', 'Developer Tools'] },
+      { title: 'Contact', links: ['+35220880507', 'sales@gcorelabs.com'] },
+    ].map((section, index) => (
+      <motion.div key={index}
+      initial="hidden"
+        animate={footerAnimation.controls}        
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: index * 0.3, ease: [0.6, -0.05, 0.01, 0.95] } },
+        }}
+      >
+        <h3 className="text-lg font-semibold mb-0 p-0">{section.title}</h3>
+        <ul className="space-y-2">
+          {section.links.map((link, i) => (
+            <li key={i}>
+              <a className="text-sm text-gray-400" href={link}>
+                {link}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    ))}
+  </div>
+
+  <div className="mt-8 border-t border-gray-700 pt-6">
+  <motion.div
+  initial="hidden"
+  animate={footerAnimation.controls}        
+  variants={{
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.5, ease: [0.6, -0.05, 0.01, 0.95] } },
+  }}
+  className="flex justify-between items-center">
+          <p className="text-sm">
+            This site is protected by reCAPTCHA and the Google <a href="#" className="text-blue-500">Privacy Policy</a> and <a href="#" className="text-blue-500">Terms of Service</a> apply.
+          </p>
+          <div className="flex space-x-2">
+            <Image width={20} height={20} src="/master-card.png" alt="Mastercard" className="w-auto h-auto" />
+            <Image width={20} height={20} src="/paypal.png" alt="PayPal" className="w-auto h-auto" />
+            <Image width={20} height={20} src="/secure-code.png" alt="Visa" className="w-auto h-auto" />
+            <Image width={20} height={20} src="/american-express.png" alt="American Express" className="w-auto h-auto" />
+          </div>
+        </motion.div>
+
+    <motion.p 
+    initial="hidden"
+    animate={footerAnimation.controls}        
+    variants={{
+      hidden: { opacity: 0, y: 50 },
+      visible: { opacity: 1, y: 0, transition: { duration: 1.2, delay: 1.7, ease: [0.6, -0.05, 0.01, 0.95] } },
+    }}
+    className="text-xs mt-4 text-center">
+      G-Core Labs S.A. © 2015-2024 All rights reserved. Principal place of business and postal
+      address: 2-4, Rue Edmond Reuter, L-5326 Contern, Luxembourg.
+    </motion.p>
+  </div>
+</footer>
+
+      </motion.section>
       </>
       )}
       </>
     );
   }
-  
